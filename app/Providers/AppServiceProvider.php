@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasRole(Roles::SUPERADMIN) ? true : null;
         });
 
-        view()->composer('*', function ($view) {
+        view()->composer(['users.edit'], function ($view) {
             $view->with('all_roles', Role::all());
         });
     }
