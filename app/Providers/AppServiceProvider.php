@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Enums\Roles;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::before(function ($user, $ability) {
             return $user->hasRole(Roles::SUPERADMIN) ? true : null;
+        });
+
+        view()->composer('*', function ($view) {
+            $view->with('all_roles', Role::all());
         });
     }
 }

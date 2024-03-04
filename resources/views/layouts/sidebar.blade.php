@@ -37,15 +37,14 @@
             </li>
 
             <!-- Section Devider -->
-            @can('users.list')
-                <div class="section border-b pt-4 mb-4 text-xs text-gray-600 border-gray-700 pb-1 pl-3">
-                    Management
-                </div>
-
+            <div class="section border-b pt-4 mb-4 text-xs text-gray-600 border-gray-700 pb-1 pl-3">
+                Management
+            </div>
+            @can(['users.list', 'roles.list', 'permission.list'])
                 <!-- ITEM -->
                 <li class="text-sm text-gray-500 ">
 
-                    <x-dropdown-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')"
+                    <x-dropdown-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')"
                         class="flex items-center w-full py-1 px-2 rounded relative text-white  hover:bg-gray-700 ">
                         <div class="pr-2">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -54,6 +53,32 @@
                             </svg>
                         </div>
                         <div>Users </div>
+                    </x-dropdown-link>
+                </li>
+                <li class="text-sm text-gray-500 ">
+
+                    <x-dropdown-link href="{{ route('roles.list') }}" :active="request()->routeIs('roles.list')"
+                        class="flex items-center w-full py-1 px-2 rounded relative text-white  hover:bg-gray-700 ">
+                        <div class="pr-2">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div>Roles </div>
+                    </x-dropdown-link>
+                </li>
+                <li class="text-sm text-gray-500 ">
+
+                    <x-dropdown-link href="{{ route('permission.list') }}" :active="request()->routeIs('permission.list')"
+                        class="flex items-center w-full py-1 px-2 rounded relative text-white  hover:bg-gray-700 ">
+                        <div class="pr-2">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div>Permission </div>
                     </x-dropdown-link>
                 </li>
             @endcan

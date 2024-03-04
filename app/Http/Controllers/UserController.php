@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
 
-    protected $limit = 1;
+    protected $userRepository;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
-        $this->middleware(['permission:users.list']);
+        $this->userRepository = $userRepository;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::where('id', '!=', Auth::id())->paginate($this->limit);
+        $users = $this->userRepository->getAllPaginateUsers([['id', '!=', Auth::id()]], ['roles']);
         return view('users.index', compact('users'));
     }
 
@@ -43,25 +45,25 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $userUpdateRequest, User $user)
     {
-        //
+        $users = $this->userRepository->updateUser($user->id, $userUpdateRequest->all());
+        return redirect()->back()->with(['success' => 'User updated successfully!']);
     }
 
     /**
