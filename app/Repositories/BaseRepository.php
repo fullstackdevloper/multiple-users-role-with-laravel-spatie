@@ -40,9 +40,13 @@ class BaseRepository implements BaseRepositoryInterface
      *
      * @return \Illuminate\Support\Collection|\Illuminate\Database\Eloquent\Collection
      */
-    public function get(array $conditions, array $relations = [])
+    public function get(array $conditions = [], array $relations = [])
     {
-        $query = $this->model->where($conditions);
+        $query = $this->model;
+
+        if (!empty($conditions)) {
+            $query->where($conditions);
+        }
 
         if (!empty($relations)) {
             $query->with($relations);
@@ -142,5 +146,16 @@ class BaseRepository implements BaseRepositoryInterface
     public function deleteByUuid(string $uuid): bool
     {
         return $this->model->where('uuid', $uuid)->delete();
+    }
+
+    /**
+     * Delete a record using condition.
+     *
+     * @param  string  $id
+     * @return bool
+     */
+    public function deleteUsingArray(string $column, array $values): bool
+    {
+        return $this->model->whereIn($column, $values)->delete();
     }
 }
