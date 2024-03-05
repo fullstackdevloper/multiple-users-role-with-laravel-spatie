@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -29,9 +33,11 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(CreateUserRequest $request) 
     {
-        //
+            $user_data = $request->validated();
+            $add_user = $this->userRepository->createUser($user_data);
+            // dd(['name']);
     }
 
     /**
@@ -72,5 +78,14 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    // Add user view //
+    public function addUser(){
+        
+        $all_roles = Role::all();
+        $permissions = Permission::all();
+        
+        return view('users.add',compact('all_roles','permissions'));
     }
 }

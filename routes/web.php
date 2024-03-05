@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('user')->name('users.')->group(function () {
             Route::get('', [UserController::class, 'index'])->name('list');
+            Route::get('add/user', [UserController::class, 'addUser'])->name('add');
+            Route::post('create/user', [UserController::class, 'create'])->name('create');
             Route::get('edit/{user}', [UserController::class, 'edit'])->name('edit');
             Route::patch('/{user}', [UserController::class, 'update'])->name('update');
         });

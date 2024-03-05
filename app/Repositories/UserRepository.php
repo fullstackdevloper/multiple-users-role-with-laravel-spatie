@@ -26,4 +26,7 @@ class UserRepository extends BaseRepository
         }
         return $user;
     }
+    public function createUser($user_data){
+        dd($user_data);
+    }
 }

@@ -6,6 +6,11 @@
     </x-slot>
     <div class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll" x-data="{}">
         <h3 class="mt-6 text-xl">Users</h3>
+        <div class="flex justify-end">
+            <a href="{{ route('users.add') }}" class="your-button-styles">
+                <x-primary-button>{{ __('Add User') }}</x-primary-button>
+            </a>
+        </div>
         <div class="flex flex-col mt-6">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
