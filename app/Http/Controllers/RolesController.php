@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Roles;
+use App\Http\Requests\RoleCreateRequest;
 use App\Http\Requests\UpdateRolePermission;
 use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
@@ -30,15 +31,16 @@ class RolesController extends Controller
      */
     public function create()
     {
-        //
+        return view('roles.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RoleCreateRequest $roleCreateRequest)
     {
-        //
+        $this->roleRepository->createRole($roleCreateRequest->all());
+        return redirect()->route('roles.list')->with(['status' => 'success', 'message' => 'Role added successfully!']);
     }
 
     /**
@@ -69,8 +71,9 @@ class RolesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        //
+        $this->roleRepository->removeRole($role);
+        return redirect()->route('roles.list')->with(['status' => 'success', 'message' => 'Role removed successfully!']);
     }
 }

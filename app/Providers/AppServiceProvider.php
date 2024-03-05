@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('all_roles', Role::all());
         });
 
-        view()->composer(['roles.edit'], function ($view) {
+        view()->composer(['roles.edit', 'roles.create'], function ($view) {
             $view->with('permissions', Permission::all());
         });
 
