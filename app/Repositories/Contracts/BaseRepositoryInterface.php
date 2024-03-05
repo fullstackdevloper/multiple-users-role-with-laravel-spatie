@@ -7,9 +7,9 @@ interface BaseRepositoryInterface
     public function all();
 
     public function get(array $conditions, array $relations);
-    
+
     public function paginate(int $perPage, array $conditions, array $relations);
-    
+
     public function find(int $id);
 
     public function findByUuid(string $id);
@@ -19,4 +19,6 @@ interface BaseRepositoryInterface
     public function deleteById(int $id);
 
     public function deleteByUuid(string $uuid);
+    
+    public function deleteUsingArray(string $column, array $values);
 }

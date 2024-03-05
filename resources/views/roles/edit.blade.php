@@ -27,18 +27,19 @@
                                 class="mt-1 block w-full" :value="old('name', $role->name)" required autofocus autocomplete="name" />
                             <x-input-error class="mt-2" :messages="$errors->get('name')" />
                         </div>
-                        <div class="flex items-center gap-6 flex-wrap">
-                        @foreach ($permissions as $permission)
-                            <div class="divide-y">
-                                <div class="flex items-start space-x-3">
-                                    <input type="checkbox" name ='permissions[]' value="{{ $permission->name }}"
-                                        @if (in_array($permission->id, $role->permissions->pluck('id')->toArray())) checked @endif
-                                        class="border-gray-300 rounded w-5" />
-                                    <div class="flex flex-col pl-2">
-                                        <h1 class="text-gray-700 font-medium leading-none">{{ $permission->name }}</h1>
+                        <div class="grid grid-cols-5 gap-4">
+                            @foreach ($permissions as $permission)
+                                <div class="divide-y">
+                                    <div class="flex items-start space-x-3">
+                                        <input type="checkbox" name='permissions[]' value="{{ $permission->name }}"
+                                            @if (in_array($permission->id, $role->permissions->pluck('id')->toArray())) checked @endif
+                                            class="border-gray-300 rounded w-5" />
+                                        <div class="flex flex-col pl-2">
+                                            <h1 class="text-gray-700 font-medium leading-none">{{ $permission->name }}
+                                            </h1>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
 
