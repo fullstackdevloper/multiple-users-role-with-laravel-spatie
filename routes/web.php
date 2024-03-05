@@ -27,12 +27,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('dashboard', DashboardController::class);
 
+    
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('', [ProfileController::class, 'edit'])->name('edit');
         Route::patch('', [ProfileController::class, 'update'])->name('update');
         Route::delete('', [ProfileController::class, 'destroy'])->name('destroy');
     });
-
     Route::middleware(['user_permissions'])->group(function () {
         Route::prefix('user')->name('users.')->group(function () {
             Route::get('', [UserController::class, 'index'])->name('list');

@@ -37,7 +37,11 @@ class UserController extends Controller
     {
             $user_data = $request->validated();
             $add_user = $this->userRepository->createUser($user_data);
-            // dd(['name']);
+            if($add_user){
+                return redirect()->back()->with(['status'=>'success','message' => 'User added successfully!']);
+            }else{
+                return redirect()->back()->with(['status'=>'error','message' => 'This email already exists !']);
+            }          
     }
 
     /**

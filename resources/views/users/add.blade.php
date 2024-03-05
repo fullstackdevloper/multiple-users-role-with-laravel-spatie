@@ -4,6 +4,11 @@
             {{ __('Add User') }}
         </h2>
     </x-slot>
+    @if (session('status') === 'success')
+        <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
+    @else
+        <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
@@ -33,26 +38,10 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
                             </div>
                             <div>
-                                <x-input-label for="roles" :value="__('Role')" />
-                                <x-text-select id="role" name="roles[]" type="text" class="mt-1 block w-full"
-                                     required autofocus autocomplete="name" multiple>
-                                    @foreach ($all_roles as $role)
-                                        <option value="{{ $role->name }}" class="uppercase">{{ $role->name }}
-                                        </option>
-                                    @endforeach
-                                </x-text-select>
-                                <x-input-error class="mt-2" :messages="$errors->get('role')" />
-                            </div>
-                            <div>
-                                <x-input-label for="permissions" :value="__('Permissions')" />
-                                <x-text-select id="permission" name="permissions[]" type="text" class="mt-1 block w-full"
-                                 required autofocus autocomplete="name" multiple>
-                                @foreach ($permissions as $per)
-                                    <option value="{{ $per->name }}" class="uppercase">{{ $per->name }}
-                                    </option>
-                                @endforeach
-                            </x-text-select>
-                                <x-input-error class="mt-2" :messages="$errors->get('role')" />
+                                <x-input-label for="password" :value="__('Password')" />
+                                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
+                                     required autofocus />
+                                <x-input-error class="mt-2" :messages="$errors->get('email')" />
                             </div>
 
                             <div class="flex items-center gap-4">
@@ -69,18 +58,5 @@
             </div>
         </div>
     </div>
-@push('scripts')
-    <script type="module">
-        $(document).ready(function() {
-            $('#permission').select2();
-         
-        });
-    </script>
-    <script type="module">
-        $(document).ready(function() {
-            $('#role').select2();
-         
-        });
-    </script>
-@endpush
+
 </x-app-layout>
