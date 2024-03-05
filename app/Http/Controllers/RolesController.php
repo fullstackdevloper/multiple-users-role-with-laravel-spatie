@@ -20,7 +20,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = $this->roleRepository->getAllPaginateRoles();
+        $roles = $this->roleRepository->getAllPaginateRoles([], ['permissions']);
         return view('roles.index', compact('roles'));
     }
 

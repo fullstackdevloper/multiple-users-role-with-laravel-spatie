@@ -13,8 +13,8 @@ class RoleRepository extends BaseRepository
         parent::__construct($role);
     }
 
-    public function getAllPaginateRoles(array $condition = [])
+    public function getAllPaginateRoles(array $condition = [], array $withRelation)
     {
-        return $this->paginate($this->limit, $condition);
+        return $this->paginate($this->limit, $condition, $withRelation);
     }
 }

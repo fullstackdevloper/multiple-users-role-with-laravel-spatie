@@ -36,19 +36,19 @@
                             <div>
                                 <x-input-label for="roles" :value="__('Role')" />
                                 <x-text-select id="role" name="roles[]" type="text" class="mt-1 block w-full"
-                                    :value="old('roles', $user->roles->pluck('name'))" required autofocus autocomplete="name" multiple>
+                                    autofocus autocomplete="name" multiple>
                                     @foreach ($all_roles as $role)
                                         <option value="{{ $role->name }}" class="uppercase">{{ $role->name }}
                                         </option>
                                     @endforeach
                                 </x-text-select>
-                                <x-input-error class="mt-2" :messages="$errors->get('role')" />
+                                <x-input-error class="mt-2" :messages="$errors->get('roles')" />
                             </div>
 
                             <div class="flex items-center gap-4">
                                 <x-primary-button>{{ __('Save') }}</x-primary-button>
 
-                                @if (session('status') === 'role-updated')
+                                @if (session('success') === 'role-updated')
                                     <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
                                         class="text-sm text-gray-600">{{ __('Saved.') }}</p>
                                 @endif
