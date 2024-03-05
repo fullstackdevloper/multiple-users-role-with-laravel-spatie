@@ -4,8 +4,12 @@
             {{ __('Permissions') }}
         </h2>
     </x-slot>
+    @if (session('status') === 'success')
+        <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
+    @endif
     <div class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll" x-data="{}">
         <h3 class="mt-6 text-xl">Permissions</h3>
+        <x-nav-link href="{{route('permission.create')}}">{{ __('Save') }}</x-nav-link>
         <div class="flex flex-col mt-6">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -33,7 +37,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">{{ $permission->name }}
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        {{ $permission->name }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -45,8 +50,15 @@
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                            <a href="{{ route('permission.edit', ['permission' => $permission->id]) }}"
-                                                class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            <form
+                                                action="{{ route('permission.destroy', ['permission' => $permission->id]) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="text-indigo-600 hover:text-indigo-900" type="submit">Delete</button>
+                                            </form>
+                                            {{-- <a href="{{ route('permission.edit', ['permission' => $permission->id]) }}"
+                                                class="text-indigo-600 hover:text-indigo-900">Delete</a> --}}
                                         </td>
                                     </tr>
                                 @empty

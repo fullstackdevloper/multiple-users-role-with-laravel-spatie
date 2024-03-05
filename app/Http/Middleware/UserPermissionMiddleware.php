@@ -17,7 +17,6 @@ class UserPermissionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         if ($request->user()->can(Route::currentRouteName())) {
             return $next($request);
         }

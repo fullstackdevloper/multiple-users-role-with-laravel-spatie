@@ -34,7 +34,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware(['user_permissions'])->group(function () {
-
         Route::prefix('user')->name('users.')->group(function () {
             Route::get('', [UserController::class, 'index'])->name('list');
             Route::get('edit/{user}', [UserController::class, 'edit'])->name('edit');
@@ -49,8 +48,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('permission')->name('permission.')->group(function () {
             Route::get('', [PermissionController::class, 'index'])->name('list');
+            Route::post('', [PermissionController::class, 'store'])->name('store');
+            Route::get('add', [PermissionController::class, 'create'])->name('create');
             Route::get('edit/{permission}', [PermissionController::class, 'edit'])->name('edit');
             Route::patch('{permission}', [PermissionController::class, 'update'])->name('update');
+            Route::delete('{permission}', [PermissionController::class, 'destroy'])->name('destroy');
         });
     });
 });

@@ -27,7 +27,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = $this->permissionRepository->getAllPermissions();
+        return view('permissions.create', compact('permissions'));
     }
 
     /**
@@ -35,7 +36,8 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->permissionRepository->addOrUpdatePermissions($request->all());
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Permission added successfully!']);
     }
 
     /**
@@ -51,7 +53,7 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        return  view('permissions.edit',compact('permission'));
+        return  view('permissions.edit', compact('permission'));
     }
 
     /**
@@ -65,8 +67,9 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Permission $permission)
     {
-        //
+        $this->permissionRepository->removePermission($permission);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Permission removed successfully!']);
     }
 }
