@@ -4,7 +4,7 @@
             {{ __('Permissions Add') }}
         </h2>
     </x-slot>
-     @if (session('status') === 'success')
+    @if (session('status') === 'success')
         <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
     @endif
     <div class="py-12">
@@ -19,24 +19,22 @@
                     </header>
 
 
-                    <form method="post" action="{{ route('permission.store') }}"
-                        class="mt-6 space-y-6">
+                    <form method="post" action="{{ route('permission.store') }}" class="mt-6 space-y-6">
                         @csrf
-                        <div class="flex items-center gap-6 flex-wrap">
-                        @foreach ($route_lists as $key => $route)
-                            <div class="divide-y">
-                                <div class="flex items-start space-x-3">
-                                    <input type="checkbox" name ='permissions[]' value="{{ $route }}"
-                                        @if (in_array($route, $permissions->pluck('name')->toArray())) checked @endif
-                                        class="border-gray-300 rounded w-5" />
-                                    <div class="flex flex-col pl-2">
-                                        <h1 class="text-gray-700 font-medium leading-none">{{  $route }}</h1>
+                        <div class="grid grid-cols-5 gap-4">
+                            @foreach ($route_lists as $route)
+                                <div class="divide-y">
+                                    <div class="flex items-start space-x-3">
+                                        <input type="checkbox" name ='permissions[]' value="{{ $route }}"
+                                            @if (in_array($route, $permissions->pluck('name')->toArray())) checked @endif
+                                            class="border-gray-300 rounded w-5" />
+                                        <div class="flex flex-col pl-2">
+                                            <h1 class="text-gray-700 font-medium leading-none">{{ $route }}</h1>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
-
                         <div class="flex items-center gap-4">
                             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

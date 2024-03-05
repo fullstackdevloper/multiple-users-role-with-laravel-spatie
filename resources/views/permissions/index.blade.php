@@ -8,8 +8,12 @@
         <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
     @endif
     <div class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll" x-data="{}">
-        <h3 class="mt-6 text-xl">Permissions</h3>
-        <x-nav-link href="{{route('permission.create')}}">{{ __('Save') }}</x-nav-link>
+        <div class="flex justify-between">
+            <h3 class="mt-6 text-xl">Permissions</h3>
+            <x-nav-link
+                class="inline-flex items-center px-4  bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                href="{{ route('permission.create') }}">{{ __('Add') }}</x-nav-link>
+        </div>
         <div class="flex flex-col mt-6">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -55,7 +59,8 @@
                                                 method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="text-indigo-600 hover:text-indigo-900" type="submit">Delete</button>
+                                                <button class="text-indigo-600 hover:text-indigo-900"
+                                                    type="submit">Delete</button>
                                             </form>
                                             {{-- <a href="{{ route('permission.edit', ['permission' => $permission->id]) }}"
                                                 class="text-indigo-600 hover:text-indigo-900">Delete</a> --}}
