@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Roles;
+use App\Http\Requests\UpdateRolePermission;
 use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -59,9 +60,10 @@ class RolesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Role $role, Request $request)
+    public function update(UpdateRolePermission $updateRolePermission, Role $role)
     {
-        return $request->all();
+        $this->roleRepository->updateRole($role->id, $updateRolePermission->all());
+        return redirect()->route('roles.list')->with(['status' => 'success', 'message' => 'Role and Permission updated successfully!']);
     }
 
     /**

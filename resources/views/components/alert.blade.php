@@ -20,7 +20,7 @@
         x-init="setTimeout(() => show = false, 5000)">
         <div class="flex justify-between {{ $bgclass }} shadow-inner rounded p-2 {{ $textclass }}">
             <p class="self-center">
-                <strong>{{ $status }}</strong> {{ $message }}
+                {{ $message }}
             </p>
             <strong class="text-xl align-center cursor-pointer alert-del" @click="show = false">&times;</strong>
         </div>

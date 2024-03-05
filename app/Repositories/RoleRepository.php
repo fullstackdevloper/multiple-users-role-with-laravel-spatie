@@ -17,4 +17,13 @@ class RoleRepository extends BaseRepository
     {
         return $this->paginate($this->limit, $condition, $withRelation);
     }
+
+    public function updateRole($roleId, array $payload = [])
+    {
+        $role =  $this->updateByCriteria(['id' => $roleId], ['name' => $payload['name']]);
+        if ($role) {
+            $role->syncPermissions($payload['permissions']);
+        }
+        return $role;
+    }
 }
