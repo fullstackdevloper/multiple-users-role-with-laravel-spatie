@@ -1,41 +1,36 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Role Update') }}
+            {{ __('Permissions Add') }}
         </h2>
     </x-slot>
+     @if (session('status') === 'success')
+        <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <section>
                     <header>
                         <h2 class="text-lg font-medium text-gray-900">
-                            {{ __('Role Information') }}
+                            {{ __('Permission Information') }}
                         </h2>
 
                     </header>
 
 
-                    <form method="post" action="{{ route('roles.update', ['role' => $role->id]) }}"
+                    <form method="post" action="{{ route('permission.store') }}"
                         class="mt-6 space-y-6">
                         @csrf
-                        @method('patch')
-
-                        <div>
-                            <x-input-label for="name" :value="__('Name')" />
-                            <x-text-input readonly id="name" name="name" type="text"
-                                class="mt-1 block w-full" :value="old('name', $role->name)" required autofocus autocomplete="name" />
-                            <x-input-error class="mt-2" :messages="$errors->get('name')" />
-                        </div>
                         <div class="flex items-center gap-6 flex-wrap">
-                        @foreach ($permissions as $permission)
+                        @foreach ($route_lists as $key => $route)
                             <div class="divide-y">
                                 <div class="flex items-start space-x-3">
-                                    <input type="checkbox" name ='permissions[]' value="{{ $permission->name }}"
-                                        @if (in_array($permission->id, $role->permissions->pluck('id')->toArray())) checked @endif
+                                    <input type="checkbox" name ='permissions[]' value="{{ $route }}"
+                                        @if (in_array($route, $permissions->pluck('name')->toArray())) checked @endif
                                         class="border-gray-300 rounded w-5" />
                                     <div class="flex flex-col pl-2">
-                                        <h1 class="text-gray-700 font-medium leading-none">{{ $permission->name }}</h1>
+                                        <h1 class="text-gray-700 font-medium leading-none">{{  $route }}</h1>
                                     </div>
                                 </div>
                             </div>

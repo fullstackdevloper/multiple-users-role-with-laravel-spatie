@@ -18,4 +18,24 @@ class PermissionRepository extends BaseRepository
     {
         return $this->paginate($this->limit, $condition);
     }
+
+    public function removePermission(Permission $permission)
+    {
+        $permission->roles()->detach();
+        return  $this->deleteById($permission->id);
+    }
+
+    public function getAllPermissions(array $condition = [], array $relation = [])
+    {
+        return  $this->get($condition, $relation);
+    }
+
+    public function addOrUpdatePermissions($payload)
+    {
+        foreach ($payload['permissions'] as $permissionName) {
+            $params = ['name' => $permissionName];
+            $this->updateOrCreateByCriteria($params, $params);
+        }
+        return true;
+    }
 }

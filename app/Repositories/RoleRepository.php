@@ -13,8 +13,17 @@ class RoleRepository extends BaseRepository
         parent::__construct($role);
     }
 
-    public function getAllPaginateRoles(array $condition = [])
+    public function getAllPaginateRoles(array $condition = [], array $withRelation)
     {
-        return $this->paginate($this->limit, $condition);
+        return $this->paginate($this->limit, $condition, $withRelation);
+    }
+
+    public function updateRole($roleId, array $payload = [])
+    {
+        $role =  $this->updateByCriteria(['id' => $roleId], ['name' => $payload['name']]);
+        if ($role) {
+            $role->syncPermissions($payload['permissions']);
+        }
+        return $role;
     }
 }

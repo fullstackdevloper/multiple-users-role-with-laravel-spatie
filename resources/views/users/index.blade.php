@@ -4,7 +4,10 @@
             {{ __('Users') }}
         </h2>
     </x-slot>
-    <div class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll" x-data="{}">
+    @if (session('status') === 'success')
+        <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
+    @endif
+    <div class="flex-1 max-h-full p-5 overflow-hidden" x-data="{}">
         <h3 class="mt-6 text-xl">Users</h3>
         <div class="flex justify-end">
             <a href="{{ route('users.add') }}" class="your-button-styles">
@@ -38,9 +41,6 @@
                                         class="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase">
                                         Action
                                     </th>
-                                    {{-- <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">Action</span>
-                                    </th> --}}
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -70,7 +70,8 @@
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                             {{ $user->roles->pluck('name')->implode(', ') }}</td>
                                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                            <a href="{{route('users.edit', ['user' => $user])}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            <a href="{{ route('users.edit', ['user' => $user]) }}"
+                                                class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                         </td>
                                     </tr>
 
@@ -85,18 +86,5 @@
                 </div>
             </div>
         </div>
-        {{-- <select class="js-example-basic-single" name="state" name="states[]" multiple>
-            <option value="AL">Alabama</option>
-            <option value="WY">Wyoming</option>
-            <!-- Other options -->
-        </select> --}}
     </div>
-    {{-- @push('scripts')
-        <script type="module">
-            $(document).ready(function() {
-                alert('sdfsdfsdfsdfdsf')
-                $('.js-example-basic-single').select2();
-            });
-        </script>
-    @endpush --}}
 </x-app-layout>
