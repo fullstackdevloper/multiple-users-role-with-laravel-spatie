@@ -4,9 +4,6 @@
             {{ __('Users') }}
         </h2>
     </x-slot>
-    @if (session('status') === 'success')
-        <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
-    @endif
     <div class="flex-1 max-h-full p-5 overflow-hidden" x-data="{}">
         <h3 class="mt-6 text-xl">Users</h3>
         <div class="flex justify-end">

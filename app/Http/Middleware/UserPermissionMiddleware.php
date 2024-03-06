@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\Roles;
+use App\Exceptions\UnauthorizedAccessException;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,6 @@ class UserPermissionMiddleware
         if ($request->user()->can(Route::currentRouteName())) {
             return $next($request);
         }
-        return redirect()->route('dashboard.index');
+        throw new UnauthorizedAccessException();
     }
 }
