@@ -13,6 +13,7 @@ class RolesController extends Controller
 {
 
     protected $roleRepository;
+    protected $limit = 10;
     public function __construct(RoleRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;
@@ -22,7 +23,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = $this->roleRepository->getAllPaginateRoles([], ['permissions']);
+        $roles = $this->roleRepository->paginate($this->limit);
         return view('roles.index', compact('roles'));
     }
 
@@ -73,7 +74,7 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
-        $this->roleRepository->removeRole($role);
+        $deleted = $this->roleRepository->deleteById($role->id);
         return redirect()->route('roles.list')->with(['status' => 'success', 'message' => 'Role removed successfully!']);
     }
 }
