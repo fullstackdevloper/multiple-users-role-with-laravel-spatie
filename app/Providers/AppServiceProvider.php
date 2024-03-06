@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enums\Roles;
+use App\Repositories\PostRepository;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        
+
     }
 
     /**

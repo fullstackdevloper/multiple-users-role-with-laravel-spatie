@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Add User') }}
+            {{ __('Add Post') }}
         </h2>
     </x-slot>
     @if (session('status') === 'success')
@@ -16,13 +16,13 @@
                     <section>
                         <header>
                             <h2 class="text-lg font-medium text-gray-900">
-                                {{ __('Add User Information') }}
+                                {{ __('Post Information') }}
                             </h2>
 
                         </header>
 
 
-                        <form method="post" action="{{ route('users.create') }}"
+                        <form method="post" action="{{ route('posts.add') }}"
                             class="mt-6 space-y-6">
                             @csrf
                             <div>
@@ -32,28 +32,13 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
                             </div>
                             <div>
-                                <x-input-label for="email" :value="__('Email')" />
-                                <x-text-input id="email" name="email" type="text" class="mt-1 block w-full"
-                                     required autofocus autocomplete="email" />
-                                <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                                <x-input-label for="email" :value="__('Description')" />
+                                <textarea id="email" name="description" type="text" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                     required autofocus ></textarea>
+                                <x-input-error class="mt-2" :messages="$errors->get('description')" />
                             </div>
-                            <div>
-                                <x-input-label for="password" :value="__('Password')" />
-                                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
-                                     required autofocus />
-                                <x-input-error class="mt-2" :messages="$errors->get('password')" />
-                            </div>
-                            <div>
-                                <x-input-label for="roles" :value="__('Role')" />
-                                <x-text-select id="role" name="roles[]" type="text" class="mt-1 block w-full"
-                                    autofocus autocomplete="name" multiple>
-                                    @foreach ($all_roles as $role)
-                                        <option value="{{ $role->name }}" class="uppercase">{{ $role->name }}
-                                        </option>
-                                    @endforeach
-                                </x-text-select>
-                                <x-input-error class="mt-2" :messages="$errors->get('roles')" />
-                            </div>
+                    
+
                             <div class="flex items-center gap-4">
                                 <x-primary-button>{{ __('Save') }}</x-primary-button>
 
@@ -68,11 +53,5 @@
             </div>
         </div>
     </div>
-    @push('scripts')
-        <script type="module">
-            $(document).ready(function() {
-                $('#role').select2();
-            });
-        </script>
-    @endpush
+
 </x-app-layout>

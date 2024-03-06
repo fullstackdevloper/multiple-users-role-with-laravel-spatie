@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends BaseRepository
@@ -36,19 +37,12 @@ class UserRepository extends BaseRepository
     }
     public function createUser($user_data){
 
-        $existingUser = User::where('email', $user_data['email'])->first();
-        if($existingUser){
-             return false;
-        }else{
-            $user = new User;
-            $user->name = $user_data['name'];
-            $user->email = $user_data['email'];
-            $user->password = Hash::make($user_data['password']);
-            $user->save();
-            
+       
+            $user = $this->create(['name'=>$user_data['name'], 'email'=>$user_data['email'],'password'=>Hash::make($user_data['password'])]);
+            $user->syncRoles($user_data['roles']);
             return $user;
 
-        }
+        
         
     }
 }

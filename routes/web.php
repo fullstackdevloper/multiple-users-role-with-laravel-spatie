@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
@@ -43,7 +44,15 @@ Route::middleware(['auth'])->group(function () {
             Route::patch('/{user}', [UserController::class, 'update'])->name('update');
         });
 
-  
+        Route::prefix('posts')->name('posts.')->group(function (){
+            Route::get('',[PostsController::class,'index'])->name('list');
+            Route::get('create/post', [PostsController::class, 'create'])->name('create');
+            Route::post('add', [PostsController::class, 'add'])->name('add');
+            Route::get('edit/{post}', [PostsController::class, 'edit'])->name('edit');
+            Route::post('update/{post}', [PostsController::class, 'update'])->name('update');
+            Route::delete('destroy/{post}', [PostsController::class, 'destroy'])->name('destroy');
+
+        });
 
 
         Route::get('roles', [RolesController::class, 'index'])->name('roles.list');
