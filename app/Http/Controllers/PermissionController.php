@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Permission;
 class PermissionController extends Controller
 {
     protected $permissionRepository;
+    protected $limit = 10;
     public function __construct(PermissionRepository $permissionRepository)
     {
         $this->permissionRepository = $permissionRepository;
@@ -18,7 +19,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = $this->permissionRepository->getAllPaginatePemissions();
+        $permissions = $this->permissionRepository->paginate($this->limit);
         return view('permissions.index', compact('permissions'));
     }
 
@@ -27,7 +28,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        $permissions = $this->permissionRepository->getAllPermissions();
+        $permissions = $this->permissionRepository->get();
         return view('permissions.create', compact('permissions'));
     }
 
@@ -69,7 +70,7 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        $this->permissionRepository->removePermission($permission);
+        $deleted = $this->permissionRepository->deleteById($permission->id);
         return redirect()->back()->with(['status' => 'success', 'message' => 'Permission removed successfully!']);
     }
 }
