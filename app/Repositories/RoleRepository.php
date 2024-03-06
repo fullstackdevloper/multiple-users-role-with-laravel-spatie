@@ -15,12 +15,6 @@ class RoleRepository extends BaseRepository
         parent::__construct($role);
     }
 
-    // Get all roles paginated with conditions and relations
-    public function getAllPaginateRoles(array $condition = [], array $withRelation)
-    {
-        return $this->paginate($this->limit, $condition, $withRelation);
-    }
-
     // Update a role with given ID and payload
     public function updateRole($roleId, array $payload = [])
     {
@@ -41,12 +35,5 @@ class RoleRepository extends BaseRepository
             $role->syncPermissions($payload['permissions']);
         }
         return $role;
-    }
-
-    // Remove a role and detach its permissions
-    public function removeRole(Role $role)
-    {
-        $role->permissions()->detach();
-        return  $this->deleteById($role->id);
     }
 }
