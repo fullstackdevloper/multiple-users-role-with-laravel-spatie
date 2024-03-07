@@ -48,10 +48,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        // Get all roles and permissions
-        $all_roles = Role::all();
-        $permissions = Permission::all();
-        return view('users.add', compact('all_roles', 'permissions'));
+        return view('users.add');
     }
 
     /**

@@ -17,8 +17,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        
-
     }
 
     /**
@@ -30,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasRole(Roles::SUPERADMIN) ? true : null;
         });
 
-        view()->composer(['users.edit'], function ($view) {
+        view()->composer(['users.edit', 'users.add'], function ($view) {
             $view->with('all_roles', Role::all());
         });
 
