@@ -89,7 +89,7 @@
                                     {{ __('Cancel') }}
                                 </x-secondary-button>
 
-                                <x-danger-button class="ms-3" x-on:click="submit()">
+                                <x-danger-button class="ms-3" x-data="roleModal" x-on:click="submit()">
                                     {{ __('Delete') }}
                                 </x-danger-button>
                             </div>
@@ -99,11 +99,11 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     @push('scripts')
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.data('roleModal', () => ({
-                    roleId: null,
                     submit() {
                         $('#form_' + this.roleId).submit();
                     }
