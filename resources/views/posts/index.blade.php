@@ -12,7 +12,7 @@
                 href="{{ route('post.create') }}">{{ __('Add') }}
             </x-nav-link>
         </div>
-        <div class="flex flex-col mt-6">
+        <div class="flex flex-col mt-6" x-data="postModal">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                     <div class="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
@@ -51,7 +51,8 @@
                                         <td class="px-6 py-4 whitespace-normal">
                                             <div class="flex items-center">
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">{{ $post->description }}
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        {{ $post->description }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -59,18 +60,18 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span
                                                 class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                {{$post->created_at->format('Y-m-d')}}
+                                                {{ $post->created_at->format('Y-m-d') }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                             <div x-data="{ post: '{{ $post->name }}' }">
-                                                <form 
-                                                    action="{{ route('post.destroy', ['post' => $post->id]) }}"
-                                                    method="post">
+                                                <form action="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                    method="post" id="form_{{ $post->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="text-red-600 hover:text-indigo-900"
-                                                        type="submit">Delete</button>
+                                                        x-on:click.prevent="postId = '{{ $post->id }}', $dispatch('open-modal', 'confirm-post-deletion')"
+                                                        type="button">Delete</button>
                                                 </form>
                                             </div>
 
@@ -86,8 +87,40 @@
                             {{ $posts->links() }}
                         </div>
                     </div>
+                    <x-modal name="confirm-post-deletion" :show="$errors->roleDeletion->isNotEmpty()" focusable>
+                        <div class="p-4">
+                            <h2 class="text-lg font-medium text-gray-900">
+                                {{ __('Are you sure you want to delete this post?') }}
+                            </h2>
+
+                            <p class="mt-1 text-sm text-gray-600">
+                                {{ __('Once post is deleted, all of its resources and data will be permanently deleted.') }}
+                            </p>
+                            <div class="mt-6 flex justify-end">
+                                <x-secondary-button x-on:click="$dispatch('close')">
+                                    {{ __('Cancel') }}
+                                </x-secondary-button>
+
+                                <x-danger-button class="ms-3" x-on:click="submit()">
+                                    {{ __('Delete') }}
+                                </x-danger-button>
+                            </div>
+                        </div>
+                    </x-modal>
                 </div>
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('postModal', () => ({
+                    postId: null,
+                    submit() {
+                        $('#form_' + this.postId).submit();
+                    }
+                }))
+            });
+        </script>
+    @endpush
 </x-app-layout>
