@@ -4,15 +4,12 @@
             {{ __('Posts') }}
         </h2>
     </x-slot>
-    @if (session('status') === 'success')
-        <x-alert status="{{ session('status') }}" message="{{ session('message') }}" />
-    @endif
     <div class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll" x-data="{}">
         <div class="flex justify-between">
             <h3 class="mt-6 text-xl">Posts</h3>
             <x-nav-link
                 class="inline-flex items-center px-4  bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                href="{{ route('posts.create') }}">{{ __('Add') }}
+                href="{{ route('post.create') }}">{{ __('Add') }}
             </x-nav-link>
         </div>
         <div class="flex flex-col mt-6">
@@ -68,7 +65,7 @@
                                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                             <div x-data="{ post: '{{ $post->name }}' }">
                                                 <form 
-                                                    action="{{ route('posts.destroy', ['post' => $post->id]) }}"
+                                                    action="{{ route('post.destroy', ['post' => $post->id]) }}"
                                                     method="post">
                                                     @csrf
                                                     @method('DELETE')
@@ -77,7 +74,7 @@
                                                 </form>
                                             </div>
 
-                                            <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
+                                            <a href="{{ route('post.edit', ['post' => $post->id]) }}"
                                                 class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                         </td>
                                     </tr>

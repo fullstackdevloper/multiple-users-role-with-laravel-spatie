@@ -44,10 +44,10 @@ Route::middleware(['auth'])->group(function () {
             Route::patch('/{user}', [UserController::class, 'update'])->name('update');
         });
 
-        Route::prefix('posts')->name('posts.')->group(function (){
+        Route::prefix('post')->name('post.')->group(function (){
             Route::get('',[PostsController::class,'index'])->name('list');
             Route::get('create/post', [PostsController::class, 'create'])->name('create');
-            Route::post('add', [PostsController::class, 'add'])->name('add');
+            Route::post('add', [PostsController::class, 'add'])->name('store');
             Route::get('edit/{post}', [PostsController::class, 'edit'])->name('edit');
             Route::post('update/{post}', [PostsController::class, 'update'])->name('update');
             Route::delete('destroy/{post}', [PostsController::class, 'destroy'])->name('destroy');

@@ -2,38 +2,41 @@
 
 namespace App\Repositories;
 
-use App\Models\Posts;
+use App\Models\Post;
 
 class PostRepository extends BaseRepository
 {
-
-
-    public function __construct(Posts $post)
+    /**
+     * Constructor for the PostRepository.
+     *
+     * @param  Post  $post
+     * @return void
+     */
+    public function __construct(Post $post)
     {
         parent::__construct($post);
     }
 
-    public function getPaginatePosts()
+    /**
+     * Add a new post.
+     *
+     * @param  array  $post
+     * @return mixed
+     */
+    public function addPost(array $post)
     {
-        $posts = $this->paginate(10);
-        return $posts;
+        return $this->create(['name' => $post['name'], 'description' => $post['description']]);
     }
 
-    public function addPost($post)
+    /**
+     * Update an existing post.
+     *
+     * @param  array  $post_data
+     * @param  int  $post
+     * @return mixed
+     */
+    public function updatePost(array $post_data, $post)
     {
-        $add_post = $this->create(['name'=>$post['name'],'description'=>$post['description']]);
-
-        return $add_post;
-    }
-
-    public function updatePost($post_data,$post){
-        $update = $this->updateByCriteria(['id'=>$post],['name'=>$post_data['name'],'description'=>$post_data['description']]);
-        return $update;
-    }
-
-    public function destroyPost($post)
-    {
-        $post = $this->deleteById($post);
-        return $post;
+        return $this->updateByCriteria(['id' => $post], ['name' => $post_data['name'], 'description' => $post_data['description']]);
     }
 }

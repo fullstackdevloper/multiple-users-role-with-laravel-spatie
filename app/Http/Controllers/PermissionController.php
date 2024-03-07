@@ -10,12 +10,22 @@ class PermissionController extends Controller
 {
     protected $permissionRepository;
     protected $limit = 10;
+
+    /**
+     * Constructor to initialize the PermissionRepository.
+     * 
+     * @param  \App\Repositories\PermissionRepository  $permissionRepository
+     * @return void
+     */
     public function __construct(PermissionRepository $permissionRepository)
     {
         $this->permissionRepository = $permissionRepository;
     }
+
     /**
      * Display a listing of the resource.
+     * 
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -25,6 +35,8 @@ class PermissionController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * 
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -34,6 +46,9 @@ class PermissionController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -43,14 +58,20 @@ class PermissionController extends Controller
 
     /**
      * Display the specified resource.
+     * 
+     * @param  string  $id
+     * @return void
      */
     public function show(string $id)
     {
-        //
+        // Show the specified resource
     }
 
     /**
      * Show the form for editing the specified resource.
+     * 
+     * @param  \Spatie\Permission\Models\Permission  $permission
+     * @return \Illuminate\Contracts\View\View
      */
     public function edit(Permission $permission)
     {
@@ -59,14 +80,21 @@ class PermissionController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $id
+     * @return void
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Update the specified resource in storage
     }
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * @param  \Spatie\Permission\Models\Permission  $permission
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Permission $permission)
     {

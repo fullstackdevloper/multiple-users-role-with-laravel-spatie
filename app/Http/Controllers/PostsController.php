@@ -3,57 +3,91 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
-use App\Models\Posts;
+use App\Models\Post;
 use App\Repositories\PostRepository;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 class PostsController extends Controller
 {
-
     protected $postRepository;
+    protected $limit = 10;
+
+    /**
+     * Constructor for the PostsController.
+     *
+     * @param  PostRepository  $postRepository
+     * @return void
+     */
     public function __construct(PostRepository $postRepository)
     {
         $this->postRepository = $postRepository;
     }
-    public function index(){
-        $posts = $this->postRepository->getPaginatePosts();
-        return view('posts.index',compact('posts'));
+
+    /**
+     * Display a listing of the posts.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        $posts = $this->postRepository->paginate($this->limit);
+        return view('posts.index', compact('posts'));
     }
 
-    public function create(){
+    /**
+     * Show the form for creating a new post.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
         return view('posts.create');
-        
-    }
-    public function add(CreatePostRequest $request){
-        $post_data = $request->validated();
-        $post = $this->postRepository->addPost($post_data);
-        if($post){
-            return redirect()->back()->with(['status'=>'success','message'=>'Post added successfully!']);
-        }else{
-            return redirect()->back()->with(['status'=>'error','message'=>'Error occured!']);
-        }
     }
 
-    public function edit($post){
-        $posts = Posts::find($post);
-        return view('posts.edit',compact('posts'));
+    /**
+     * Store a newly created post in storage.
+     *
+     * @param  CreatePostRequest  $createPostRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreatePostRequest $createPostRequest)
+    {
+        $this->postRepository->addPost($createPostRequest->all());
+        return redirect()->route('post.list')->with(['status' => 'success', 'message' => 'Post added successfully!']);
     }
-    public function update(CreatePostRequest $request, $post){
-        $post_data = $request->validated();
-        $update_post = $this->postRepository->updatePost($post_data,$post);
-        if($update_post){
-            return redirect()->back()->with(['status'=>'success','message'=>'Post Updated Successfully!']);
-        }else{
-            return redirect()->back()->with(['status'=>'error','message'=>'Error occured!']);
-        }
+
+    /**
+     * Show the form for editing the specified post.
+     *
+     * @param  Post  $post
+     * @return \Illuminate\View\View
+     */
+    public function edit(Post $post)
+    {
+        return view('posts.edit', compact('post'));
     }
-    public function destroy($post){
-        $post_del = $this->postRepository->destroyPost($post);
-        if($post_del){
-            return redirect()->back()->with(['status'=>'success','message'=>'Post Deletion Successfull!']);
-        }else{
-            return redirect()->back()->with(['status'=>'error','message'=>'Error occured!']);
-        }
+
+    /**
+     * Update the specified post in storage.
+     *
+     * @param  CreatePostRequest  $createPostRequest
+     * @param  Post  $post
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(CreatePostRequest $createPostRequest, Post $post)
+    {
+        $update_post = $this->postRepository->updatePost($createPostRequest->all(), $post->id);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Post Updated Successfully!']);
+    }
+
+    /**
+     * Remove the specified post from storage.
+     *
+     * @param  Post  $post
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Post $post)
+    {
+        $this->postRepository->deleteById($post->id);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Post Deletion Successfull!']);
     }
 }
