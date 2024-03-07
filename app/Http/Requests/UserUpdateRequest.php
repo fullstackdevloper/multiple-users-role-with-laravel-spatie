@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -26,9 +27,9 @@ class UserUpdateRequest extends FormRequest
         $userId = $this->route('user')->id;
 
         return [
-            'name'  => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
-            // 'role.*'  => ['required', 'array'],
+            'name'   => ['required', 'string', 'max:255'],
+            'email'  => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
+            'roles'  => ['required', 'array', Rule::exists(Role::class, 'name')],
         ];
     }
 }

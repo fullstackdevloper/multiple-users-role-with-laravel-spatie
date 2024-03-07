@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 
 class RoleCreateRequest extends FormRequest
 {
@@ -22,8 +24,8 @@ class RoleCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'permissions' => ['required', 'array'],
+            'name'        => ['required'],
+            'permissions' => ['required', 'array', Rule::exists(Permission::class, 'name')],
         ];
     }
 }

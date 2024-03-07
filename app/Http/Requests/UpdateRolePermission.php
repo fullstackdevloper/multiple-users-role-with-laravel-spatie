@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 
 class UpdateRolePermission extends FormRequest
 {
@@ -22,7 +24,7 @@ class UpdateRolePermission extends FormRequest
     public function rules(): array
     {
         return [
-            'permissions' => ['required', 'array']
+            'permissions' => ['required', 'array', Rule::exists(Permission::class, 'name')],
         ];
     }
 }
