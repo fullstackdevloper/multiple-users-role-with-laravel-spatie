@@ -14,7 +14,7 @@
                                 {{ __('Add User Information') }}
                             </h2>
                         </header>
-                        <form method="post" action="{{ route('users.create') }}" class="mt-6 space-y-6">
+                        <form method="post" action="{{ route('user.store') }}" class="mt-6 space-y-6">
                             @csrf
                             <div>
                                 <x-input-label for="name" :value="__('Name')" />

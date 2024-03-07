@@ -46,20 +46,12 @@ class UserController extends Controller
      * @param  \App\Http\Requests\CreateUserRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create(CreateUserRequest $request)
+    public function create(Request $request)
     {
-        // Validate and get user data
-        $user_data = $request->validated();
-
-        // Create user
-        $add_user = $this->userRepository->createUser($user_data);
-
-        // Check if user was successfully added
-        if ($add_user) {
-            return redirect()->back()->with(['status' => 'success', 'message' => 'User added successfully!']);
-        } else {
-            return redirect()->back()->with(['status' => 'error', 'message' => 'This email already exists!']);
-        }
+        // Get all roles and permissions
+        $all_roles = Role::all();
+        $permissions = Permission::all();
+        return view('users.add', compact('all_roles', 'permissions'));
     }
 
     /**
@@ -68,9 +60,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return void
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $createUserRequest)
     {
-        // Store a newly created resource
+        // Create user
+        $add_user = $this->userRepository->createUser($createUserRequest->all());
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'User added successfully!']);
     }
 
     /**
@@ -106,7 +101,7 @@ class UserController extends Controller
     {
         // Update the user
         $users = $this->userRepository->updateUser($user->id, $userUpdateRequest->all());
-        return redirect()->route('users.list')->with(['status' => 'success', 'message' => 'User updated successfully!']);
+        return redirect()->route('user.list')->with(['status' => 'success', 'message' => 'User updated successfully!']);
     }
 
     /**
@@ -115,22 +110,9 @@ class UserController extends Controller
      * @param  string  $id
      * @return void
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        // Remove the specified resource from storage
-    }
-
-    /**
-     * Show the form for adding a new user.
-     * 
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function addUser()
-    {
-        // Get all roles and permissions
-        $all_roles = Role::all();
-        $permissions = Permission::all();
-
-        return view('users.add', compact('all_roles', 'permissions'));
+        $users = $this->userRepository->deleteById($user->id);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'User removed successfully!']);
     }
 }

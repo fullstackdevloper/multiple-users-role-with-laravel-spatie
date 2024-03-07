@@ -7,7 +7,7 @@
     <div class="flex-1 max-h-full p-5 overflow-hidden" x-data="{}">
         <h3 class="mt-6 text-xl">Users</h3>
         <div class="flex justify-end">
-            <a href="{{ route('users.add') }}" class="your-button-styles">
+            <a href="{{ route('user.create') }}" class="your-button-styles">
                 <x-primary-button>{{ __('Add User') }}</x-primary-button>
             </a>
         </div>
@@ -67,7 +67,7 @@
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                             {{ $user->roles->pluck('name')->implode(', ') }}</td>
                                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                            <a href="{{ route('users.edit', ['user' => $user]) }}"
+                                            <a href="{{ route('user.edit', ['user' => $user]) }}"
                                                 class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                         </td>
                                     </tr>

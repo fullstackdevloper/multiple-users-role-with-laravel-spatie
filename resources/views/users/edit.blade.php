@@ -17,7 +17,7 @@
                         </header>
 
 
-                        <form method="post" action="{{ route('users.update', ['user' => $user->id]) }}"
+                        <form method="post" action="{{ route('user.update', ['user' => $user->id]) }}"
                             class="mt-6 space-y-6">
                             @csrf
                             @method('patch')

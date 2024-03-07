@@ -40,11 +40,11 @@
             <div class="section border-b pt-4 mb-4 text-xs text-gray-600 border-gray-700 pb-1 pl-3">
                 Management
             </div>
-            @can(['users.list', 'roles.list', 'permission.list', 'post.list'])
+            @can(['user.list', 'roles.list', 'permission.list', 'post.list'])
                 <!-- ITEM -->
                 <li class="text-sm text-gray-500 ">
 
-                    <x-dropdown-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')"
+                    <x-dropdown-link href="{{ route('user.list') }}" :active="request()->routeIs('user.list')"
                         class="flex items-center w-full py-1 px-2 rounded relative text-white  hover:bg-gray-700 ">
                         <div class="pr-2">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
