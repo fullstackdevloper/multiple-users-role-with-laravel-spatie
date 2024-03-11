@@ -67,6 +67,17 @@
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                             {{ $user->roles->pluck('name')->implode(', ') }}</td>
                                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                            <div x-data="{ user: '{{ $user->name }}' }"  x-show="role = 'super admin'">
+                                                <form action="{{ route('user.destroy', ['user' => $user->id]) }}"
+                                                    method="post" id="form_{{ $user->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button x-data=""
+                                                        x-on:click.prevent="userId = '{{ $user->id }}', $dispatch('open-modal', 'confirm-user-deletion')"
+                                                        class="text-red-600 hover:text-indigo-900"
+                                                        type="button">Delete</button>
+                                                </form>
+                                            </div>
                                             <a href="{{ route('user.edit', ['user' => $user]) }}"
                                                 class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                         </td>
@@ -80,8 +91,42 @@
                             {{ $users->links() }}
                         </div>
                     </div>
+                    
+                    <x-modal  name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable >
+                        <div class="p-4">
+                            <h2 class="text-lg font-medium text-gray-900">
+                                {{ __('Are you sure you want to delete this user?') }}
+                            </h2>
+
+                            <p class="mt-1 text-sm text-gray-600">
+                                {{ __('Once user is deleted, all of its resources and data will be permanently deleted.') }}
+                            </p>
+                            <div  class="mt-6 flex justify-end">
+                                <x-secondary-button x-on:click="$dispatch('close')">
+                                    {{ __('Cancel') }}
+                                </x-secondary-button>
+
+                                <x-danger-button class="ms-3" x-data="userModal" x-on:click="submit()">
+                                    {{ __('Delete') }}
+                                </x-danger-button>
+                            </div>
+                        </div>
+                    </x-modal>
                 </div>
             </div>
         </div>
     </div>
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('userModal', () => ({
+            submit() {
+                $('#form_' + userId).submit();
+            },
+        }))
+    });
+</script>
+@endpush
 </x-app-layout>
