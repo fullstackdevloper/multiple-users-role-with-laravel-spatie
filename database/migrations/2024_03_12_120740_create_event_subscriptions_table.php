@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('seats');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('event_id')->references('id')->on('events');
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
         });
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Storage;
+
 class UploadImages 
 {
     public $files;
@@ -9,9 +11,8 @@ class UploadImages
     public function uploadImageFiles($files)
     {
         foreach($files as $file){
-            $folder = public_path('category_images');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move($folder, $filename);
+            $path = $file->store('images','public');
+            $filename = basename($path);
             $images[] = $filename;
         }
         $file_names = implode(',', $images);

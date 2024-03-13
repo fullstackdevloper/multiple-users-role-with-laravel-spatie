@@ -49,7 +49,8 @@
                                 @csrf
                                 <div class="col-span-2 sm:col-span-1">
                                     <label for="seats" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seats</label>
-                                    <input type="number" max="{{$event->seats_available}}" name="seats" id="seats" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="No. of seats" required="">
+                                    <input type="number" min="1" max="{{$event->seats_available}}" name="seats" id="seats" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="No. of seats" required="">
+                                    <span id="errorMsg" class="hidden text-red-500">Minimum Number of seats is 1 and cannot exceed {{$event->seats_available}}</span>
                                 </div>
                             <div class="flex items-center gap-4">
                                 <x-primary-button>{{ __('Subscribe') }}</x-primary-button>
@@ -73,13 +74,28 @@
 <script>
     $('#seats').on('keyup',function(e){
         seats = $(this).val();
-        seats_available = '{{$event->seats_available}}'
-        price = '{{$event->fee_per_seat}}'
-        setTimeout(() => {
-            total = seats*price;
-            $('#seats_selected').text(seats)
-            $('#total_price').text(total)
-        }, 1000);
+        seats_available = parseInt('{{$event->seats_available}}');
+        if(seats >= 1)
+        {
+            if (seats > seats_available && seats > 1) {
+            $(this).val('');
+            seats = $(this).val();
+            $('#errorMsg').removeClass('hidden')
+            }else{
+                $('#errorMsg').addClass('hidden')
+                price = '{{$event->fee_per_seat}}'
+                setTimeout(() => {
+                    total = seats*price;
+                    $('#seats_selected').text(seats)
+                    $('#total_price').text(total)
+                }, 1000);
+            }
+        }else{
+            $(this).val('');
+            seats = $(this).val();
+            $('#errorMsg').removeClass('hidden')
+        }
+       
     })
 
 </script>
