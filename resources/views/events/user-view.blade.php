@@ -1,6 +1,6 @@
 <x-app-layout>
 <div class="flex flex-wrap justify-center">
-    @foreach ($events as $event)
+    @forelse ($events as $event)
         <a href="#" class="m-2 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
             <?php $images = explode(',',$event->images)?>
             <img class="object-cover w-full rounded-t-lg h-96  md:w-48 md:rounded-none md:rounded-s-lg" src="{{asset('category_images/'.$images[0])}}" alt="">
@@ -23,7 +23,9 @@
                   
                 </div>
         </a>
-        @endforeach
+        @empty
+                 <div class="text-center text-gray-700 dark:text-gray-400 text-4xl">No events found</div>
+        @endforelse
     </div>
     
         <!-- Modal toggle button -->
