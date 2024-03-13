@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserEventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +45,18 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('post', [PostsController::class, 'index'])->name('post.list');
         Route::resource('post', PostsController::class)->except(['index', 'show']);
+
+        Route::get('category', [CategoryController::class, 'index'])->name('category.list');
+        Route::resource('category', CategoryController::class)->except(['index', 'show']);
+
+        Route::get('subcategory', [SubCategoryController::class, 'index'])->name('subcategory.list');
+        Route::resource('subcategory', SubCategoryController::class)->except(['index', 'show']);
+
+        Route::get('event', [EventController::class, 'index'])->name('event.list');
+        Route::resource('event', EventController::class)->except(['index', 'show']);
+
+        Route::get('userevent', [UserEventController::class, 'index'])->name('userevent.list');
+        Route::resource('userevent', UserEventController::class)->except(['index', 'show']);
 
         Route::get('roles', [RolesController::class, 'index'])->name('roles.list');
         Route::resource('roles', RolesController::class)->except(['index', 'show']);

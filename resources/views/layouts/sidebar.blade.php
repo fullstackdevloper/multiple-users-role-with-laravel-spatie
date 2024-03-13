@@ -94,6 +94,59 @@
                         <div>Posts </div>
                     </x-dropdown-link>
                 </li>
+                <li class="text-sm text-gray-500 ">
+
+                    <x-dropdown-link href="{{ route('event.list') }}" :active="request()->routeIs('post.list')"
+                        class="flex items-center w-full py-1 px-2 rounded relative text-white  hover:bg-gray-700 ">
+                        <div class="pr-2">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div>Events Management</div>
+                    </x-dropdown-link>
+                </li>
+                <li class="text-sm text-gray-500 ">
+
+                    <x-dropdown-link href="{{ route('userevent.list') }}" :active="request()->routeIs('post.list')"
+                        class="flex items-center w-full py-1 px-2 rounded relative text-white  hover:bg-gray-700 ">
+                        <div class="pr-2">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div>Events</div>
+                    </x-dropdown-link>
+                </li>
+                <li class="text-sm text-gray-500 ">
+
+                    <x-dropdown-link href="{{ route('category.list') }}" :active="request()->routeIs('post.list')"
+                        class="flex items-center w-full py-1 px-2 rounded relative text-white  hover:bg-gray-700 ">
+                        <div class="pr-2">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div>Categories </div>
+                    </x-dropdown-link>
+                </li>
+                <li class="text-sm text-gray-500 ">
+
+                    <x-dropdown-link href="{{ route('subcategory.list') }}" :active="request()->routeIs('post.list')"
+                        class="flex items-center w-full py-1 px-2 rounded relative text-white  hover:bg-gray-700 ">
+                        <div class="pr-2">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div>Sub Categories </div>
+                    </x-dropdown-link>
+                </li>
+                
             @endcan
 
             {{-- <!-- ITEM -->

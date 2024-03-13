@@ -43,7 +43,6 @@ class BaseRepository implements BaseRepositoryInterface
     public function get(array $conditions = [], array $relations = [])
     {
         $query = $this->model;
-
         if (!empty($conditions)) {
             $query->where($conditions);
         }
@@ -51,7 +50,6 @@ class BaseRepository implements BaseRepositoryInterface
         if (!empty($relations)) {
             $query->with($relations);
         }
-
         return $query->get();
     }
 
