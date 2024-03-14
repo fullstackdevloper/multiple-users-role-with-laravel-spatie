@@ -38,7 +38,7 @@
                                 <?php $images = explode(',',$category->images); ?>
                                 <div class="flex ">
                                     @foreach ($images as $item)
-                                    <img class="w-40 p-2" src="{{asset('category_images/'.$item)}}" alt="image description">
+                                    <img class="w-40 p-2" src="{{asset('storage/images/'.$item)}}" alt="image description">
                                     @endforeach
 
                                 </div>

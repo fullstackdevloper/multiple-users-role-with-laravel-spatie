@@ -65,7 +65,7 @@
                                    
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-normal">
                                             <?php $images = explode(',',$category->images); ?>
-                                            <img class="w-60" src="{{asset('category_images/'.$images[0])}}" alt="image description">
+                                            <img class="w-60" src="{{asset('storage/images/'.$images[0])}}" alt="image description">
                                         </td>
                                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                             <div x-data="{ category: '{{ $category->title }}' }"  x-show="role = 'super admin'">
