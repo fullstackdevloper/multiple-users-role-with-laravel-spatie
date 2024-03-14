@@ -25,7 +25,7 @@ class EventUpdateRequest extends FormRequest
             'title'=>['required','string'],
             'subcategory_id'=>['required'],
             'description'=> ['required'],
-            'images.*'=> [],
+            'images.*' => ['mimes:jpeg,png,jpg'],
             'start_time' => ['required'],
             'end_time' => ['required'],            
             'fee_per_seat' => ['required','integer'],

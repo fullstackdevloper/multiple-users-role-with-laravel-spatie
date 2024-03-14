@@ -15,6 +15,7 @@ class EventRepository extends BaseRepository {
     }
     public function addEvent($event)
     {
+
         $files  = $this->uploadImages->uploadImageFiles($event['images']);
         $start = date('Y-m-d H:i:s', strtotime($event['start_time']));
         $end = date('Y-m-d H:i:s', strtotime($event['end_time']));

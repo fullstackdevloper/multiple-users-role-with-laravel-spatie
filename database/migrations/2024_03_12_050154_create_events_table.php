@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('fee_per_seat');
             $table->integer('seats_available');
             $table->timestamps();
-            $table->foreign('subcategory_id')->references('id')->on('sub_categories');
+            $table->foreign('subcategory_id')->references('id')->on('sub_categories')->cascadeOnDelete();
         });
     }
 

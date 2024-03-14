@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\CategoryUpdateRequest;
+use App\Models\Categories;
 use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
@@ -54,9 +55,8 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Categories $category)
     {
-        $category = $this->categoryRepository->find($id);
         return view('categories.edit',compact('category'));
     }
 

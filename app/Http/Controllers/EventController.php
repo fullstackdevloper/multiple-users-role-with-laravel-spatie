@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EventRequest;
 use App\Http\Requests\EventUpdateRequest;
+use App\Models\Events;
 use App\Repositories\EventRepository;
 use App\Repositories\SubCategoryRepository;
 use Illuminate\Http\Request;
@@ -58,9 +59,8 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Events $event)
     {
-        $event = $this->eventRepository->find($id);
         $subcategories = $this->subCategoryRepository->all();
         return view('events.edit',compact('event','subcategories'));
     }
